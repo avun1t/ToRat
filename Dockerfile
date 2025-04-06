@@ -25,6 +25,7 @@ RUN cd ./cmd/server && go build -o /dist/server/ToRat_server
 ENV GOPRIVATE="github.com,howett.net,gopkg.in,golang.org"
 
 # Build Linux Client
+COPY libs_linux.tar.gz /go/pkg/mod/github.com/cretz/tor-static
 RUN cd /go/pkg/mod/github.com/cretz/tor-static && tar -xf libs_linux.tar.gz
 RUN cd ./cmd/client && garble -literals -seed=random build -ldflags="-extldflags=-static" -tags "osusergo,netgo,tor" -o /dist/client/client_linux && upx /dist/client/client_linux
 
