@@ -10,7 +10,7 @@ import (
 	"net"
 	"net/rpc"
 	"time"
-
+	tor "github.com/cretz/bine/process/embedded/tor-0.4.7"
 	"github.com/cretz/bine/process/embedded"
 	"github.com/cretz/bine/tor"
 )
@@ -46,7 +46,7 @@ func NetClient() {
 	}
 
 	conf := tor.StartConf{
-		ProcessCreator:    embedded.NewCreator(),
+		ProcessCreator:    NewCreator(),
 		DataDir:           tmpDir,
 		RetainTempDataDir: false,
 	}
@@ -76,4 +76,7 @@ func NetClient() {
 		}
 		rpc.ServeConn(conn)
 	}
+}
+func NewCreator() process.Creator {
+        return tor.NewCreator()
 }
